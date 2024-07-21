@@ -1,29 +1,31 @@
 # 2dInducedMetric
  Calculates geodesics on 2d hypersurfaces. This code is written in fortran.
-How to run:
-Have gfortran installed
-type in terminal ./manifold.sh    compiles
-then if no errors or no big warnings (small warnings are fine) type in terminal
-./runmesh   executes
-This generates the mesh that is based on your input parameters but it doesn't solve the geodesic equation
-To run the geodesic equation you will need to compile ./Integrator.sh
-then if no errors or big warnings run it using ./runIntegrator
-This will solve the geodesic equation given the parameters you put in the paramater.inp file
-Then to see the graph of both the 2d->3dmesh and the geodesic solution you will need to run gnuplot
-and the type in:
-set ticslevel 0
-splot 'xyzuv.out','xyzpath.out' with lines lw 3 
-This plots a 3d mesh and changes the line with to 3 pts
-Make sure that this is only for largeish values of hu and hv in the parameters file if not gnuplot will crash
-The way I suggest is to run the mesh first with hu hv = 0.1 or something large like that then run python3 addspacing.py
-when you do that it will create a lower res copy called 'visualxyzuv.out' and sometimes you will be able to use
-it with pm3d which will give it a color gradient based on the z value which is neat
-after that you will change the values of hu and hv to something much smaller like 0.005 run the mesh and then
-run the integrator. When you do this you will run gnuplot and type:
-set ticslevel 0
-splot 'visualxyzuv.out' with pm3d, 'xyzpath.out' with lines lw 3 lt rgb "green"
-This forces the xyzpath to be a neon green
-if you get an error or something looks messed up because of the mesh get rid of the pm3d part in the visual
+## How to run 
+ How to run:
+ Have gfortran installed
+ type in terminal ./manifold.sh    compiles
+ then if no errors or no big warnings (small warnings are fine) type in terminal
+ ./runmesh   executes
+ This generates the mesh that is based on your input parameters but it doesn't solve the geodesic equation
+ To run the geodesic equation you will need to compile ./Integrator.sh
+ then if no errors or big warnings run it using ./runIntegrator
+ This will solve the geodesic equation given the parameters you put in the paramater.inp file
+ Then to see the graph of both the 2d->3dmesh and the geodesic solution you will need to run gnuplot
+ and the type in:
+ set ticslevel 0
+ splot 'xyzuv.out','xyzpath.out' with lines lw 3 
+ This plots a 3d mesh and changes the line with to 3 pts
+ Make sure that this is only for largeish values of hu and hv in the parameters file if not gnuplot will crash
+ The way I suggest is to run the mesh first with hu hv = 0.1 or something large like that then run python3 addspacing.py
+ when you do that it will create a lower res copy called 'visualxyzuv.out' and sometimes you will be able to use
+ it with pm3d which will give it a color gradient based on the z value which is neat
+ after that you will change the values of hu and hv to something much smaller like 0.005 run the mesh and then
+ run the integrator. When you do this you will run gnuplot and type:
+ set ticslevel 0
+ splot 'visualxyzuv.out' with pm3d, 'xyzpath.out' with lines lw 3 lt rgb "green"
+ This forces the xyzpath to be a neon green
+ if you get an error or something looks messed up because of the mesh get rid of the pm3d part in the visual
+
 
 
 Parameters file:
