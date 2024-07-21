@@ -88,7 +88,7 @@ and the loop contines for time (input parameter) steps
 Once the main loop is over with we create two slight diffrences in the path using a function that is zero at the first step and zero at the last step.
 You can see these functions and the main one once you finish running all the codes and opening gnuplot and typing:
 plot 'uvpath.out' with lines, 'uv+path.out' with lines, 'uv-path.out' with lines
-We then put these 3 uv paths through a distance subroutine (I did it with a function and it was jank as shit so I will be using subroutines from now on). Ofc the path with the smallest distance must be
+We then put these 3 uv paths through a distance subroutine (I did it with a function and it was jank so I will be using subroutines from now on). Ofc the path with the smallest distance must be
 our geodesic path given in 'uvpath.out'. It will write to screen when Integrator is finished distance('uv+path.out') distance('uvpath.out') distance('uv-path.out'). The way the distance calculator works
 Is just a simple line integral you can see it all the way at the bottom of GeodesicIntegrator inside the subourtine distance S = S + sqrt(...) all inside one bigger loop which is the integration loop.
 
