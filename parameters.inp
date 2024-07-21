@@ -1,0 +1,10 @@
+$inputs
+hu=0.01,hv=0.01
+umax=6.283,umin=0
+vmax=6.283,vmin=0
+switch=4 /
+$geodesics
+ui=3.0,vi=0.0
+uii=-0.4,vii=1.3
+time=70,dt=0.05
+maxvar=0.3 /
