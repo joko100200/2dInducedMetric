@@ -23,7 +23,7 @@ run the integrator. When you do this you will run gnuplot and type:
 set ticslevel 0
 splot 'visualxyzuv.out' with pm3d, 'xyzpath.out' with lines lw 3 lt rgb "green"
 This forces the xyzpath to be a neon green
-if you get an error or something looks fucked up because of the mesh get rid of the pm3d part in the visual
+if you get an error or something looks messed up because of the mesh get rid of the pm3d part in the visual
 
 
 Parameters file:
