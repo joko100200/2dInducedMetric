@@ -46,8 +46,7 @@ stop
 end if
 
 do i = 1, T, 1
-read(1,*) connection(i,1),connection(i,2),connection(i,3),&
-         connection(i,4),connection(i,5),connection(i,6)
+read(1,*) connection(i,1:6)
 enddo
 
 close(1)
