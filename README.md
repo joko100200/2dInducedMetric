@@ -1,5 +1,5 @@
 # 2dInducedMetric
- Calculates geodesics on 2d hypersurfaces. This code is written in fortran.
+ Calculates geodesics on 2d hypersurfaces. This code generates a uniform 2d flat mesh which is then implanted into 3d euclidean space based on three parmeterization functions. This code is written in fortran.
 ## How to run 
  Have gfortran installed
  type in terminal 
@@ -8,13 +8,32 @@
 ```
 Which compiles the mesh creation part of the code. Which will output an executable runmesh.
 ```bash
- ./runmesh executes
+ ./runmesh
 ```
  This generates the mesh that is based on your input parameters but it doesn't
  solve the geodesic equation.
- To run the geodesic equation you will need to compile ./Integrator.sh
- then if no errors or big warnings run it using ./runIntegrator
- This will solve the geodesic equation given the parameters you put in the paramater.inp file
+ To run the geodesic equation you will need to compile
+ ```bash
+ ./Integrator.sh
+ ```
+ Which compiles the Integration part of the code.
+ ```bash
+ ./runIntegrator
+ ```
+ The above command runs the outputted executable.
+ This will solve the geodesic equation given the parameters you put in the paramater.inp file.
+ For a more indepth look into the variables specified by parameter.inp read the comments right
+ below the variable declerations in either mesh.f95 or GeodesicIntegrator.f95.
+
+## visualising
+ After executing runmesh you can you will have multiple output files.
+ uv.out, xyzuv.out, connections.out, metric.out
+ The quick explination of these files are: <br/> <br/>
+   1. uv.out: Which is the 2d flat mesh with each row being a point where the two columns are (u,v) <br/>
+   2. xyzuv.out: Which is the uv.out mesh once it has been through the parameterization defined in xyz.f95 his file is organized with each row being a single point and each colunm (x,y,z)  <br/>
+   3. connections.out: This file stores the numerical values of connection which there are ofcourse in 2d are 6 unique components. Each row is a single point in space and the colunms are (111,112/121,122,211,212/221,222) <br/>
+   4. metric.out This file sotres the numerical values of the metric and inverse metric at every point on the mesh<br/><br/>
+   
  Then to see the graph of both the 2d->3dmesh and the geodesic solution you will need to run gnuplot
  and the type in:
  set ticslevel 0
