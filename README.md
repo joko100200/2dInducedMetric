@@ -1,5 +1,5 @@
 # 2dInducedMetric
- Calculates geodesics on 2d hypersurfaces. This code generates a uniform 2d flat mesh which is then implanted into 3d euclidean space based on three parmeterization functions. This code is written in fortran.
+ Calculates geodesics on 2d hypersurfaces. This code generates a uniform 2d flat mesh which is then implanted into 3d euclidean space based on three parmeterization functions.This code uses finite diffrence to calculate the partial derivatives. This code is written in fortran.
 ## How to run 
  Have gfortran installed
  type in terminal 
@@ -25,38 +25,45 @@ Which compiles the mesh creation part of the code. Which will output an executab
  For a more indepth look into the variables specified by parameter.inp read the comments right
  below the variable declerations in either mesh.f95 or GeodesicIntegrator.f95.
 
-## Visualising
+## Output Files
  After executing runmesh you can you will have multiple output files.
  uv.out, xyzuv.out, connections.out, metric.out
  The quick explination of these files are: <br/> <br/>
    1. uv.out: Which is the 2d flat mesh with each row being a point where the two columns are (u,v) <br/>
    2. xyzuv.out: Which is the uv.out mesh once it has been through the parameterization defined in xyz.f95 his file is organized with each row being a single point and each colunm (x,y,z)  <br/>
- Now the two files below store components of the objects only at each point. The "tangent" (points) where these objects are valued at in the files is implicitely stored in the row of the data. More information about this [below](https://github.com/joko100200/2dInducedMetric?tab=readme-ov-file#how-the-mesh-works)  <br/>
+ Now the two files below store components of the objects only at each point. The "tangent" (points) where these objects are valued at in the files is implicitely stored in the row of the data. More information about this [below](https://github.com/joko100200/2dInducedMetric?tab=readme-ov-file#how-the-mesh-works).  <br/>
    3. connections.out: This file stores the numerical values of connection which there are ofcourse in 2d are 6 unique components. Each row is a single point in space and the colunms are (111,112/121,122,211,212/221,222) <br/>
    4. metric.out This file sotres the numerical values of the metric and inverse metric at every point on the mesh where the colunms are (11,12/21,22,inv11,inv12/21,inv22)<br/><br/>
-
+ # How the Mesh Works
+mesh.f95: generates the mesh. ofc the mesh is an abstract and isn't real it just uses UVToIndex and IndexToUV to create all the points
+that mesh will evaluate the metric and connections on. <br/>
+Once mesh has finished, it outputs the metric and the connections into two files called metric.out and connections.out.
+In metric.out row i of the file is IndexToUV(i,u,v,...) is the uv point in the mesh and the 6 columns corespond to the 3 unique metric values and the 3 unique inverse metric. The file is organized as such. <br/><br/>
+ 1st | g_(11) g_(12) g_(22) g^(11) g^(12) g^(22)<br/>
+ .<br/>
+ .<br/>
+ .<br/>
+ Tst | g_(11) g_(12) g_(22) g^(11) g^(12) g^(22)<br/><br/>
+ The way the connections file is organized in the same way where the rows corespond to the u,v point by Index to U,V and we store all six unique connections as such.<br/>
+ <br/>
+ 1st | 111 112 122 211 212 222 <br/>
+ .<br/>
+ .<br/>
+ .<br/>
+ Tth | 111 112 122 211 212 222<br/>
+ <br/>
+ T here is just used to represent the total number of points in the mesh which is calculated quite early on in mesh.f95 using a variable of the same name.<br/>
+ If you open up mesh.f95 you will be able to see what I meah its ut*vt which corespond to u total (total points along u) and v total (total points along v).
+ ## Embbeding Functions
+ xyz.f95 is the file where all the functions are stored in a single switch case. These are our functions where we take our flat 2d uv surface and we put all points through and write that output to a specified file. When the mesh code above calls it.<br/>
  
+ it gives it 'uv.out', T, 'xyzuv.out' xyz.f95 then takes uv.out reads every row u,v and then puts it through whatever function switch told it to then writes that output to xyzuv.out
+ where xyzuv.out is organized by x(u,v),y(u,v),z(u,v) mesh.f95 reads that file after the call then puts all data into an array of size (T,3) to do finite diffrence derivatives.
+ To see more explination go to the actual code it has explination of all the variables
  
- # How the Mesh works
+ GeodesicIntegrator.f95: This code is what actually calculates the geodesic on the mesh because of the way mesh outputs the connections as well as the metric file we run this code seperatly which
+ lets us quickly see results. Basically we don't need to recreate the mesh everytime we want to run the geodesic calculation we can just run the geodesic calculation.
  
- Then to see the graph of both the 2d->3dmesh and the geodesic solution you will need to run gnuplot
- and the type in:
- set ticslevel 0
- splot 'xyzuv.out','xyzpath.out' with lines lw 3 
- This plots a 3d mesh and changes the line with to 3 pts
- Make sure that this is only for largeish values of hu and hv in the parameters file if not gnuplot will crash
- The way I suggest is to run the mesh first with hu hv = 0.1 or something large like that then run python3 addspacing.py
- when you do that it will create a lower res copy called 'visualxyzuv.out' and sometimes you will be able to use
- it with pm3d which will give it a color gradient based on the z value which is neat
- after that you will change the values of hu and hv to something much smaller like 0.005 run the mesh and then
- run the integrator. When you do this you will run gnuplot and type:
- set ticslevel 0
- splot 'visualxyzuv.out' with pm3d, 'xyzpath.out' with lines lw 3 lt rgb "green"
- This forces the xyzpath to be a neon green
- if you get an error or something looks messed up because of the mesh get rid of the pm3d part in the visual
-
-
-
 Parameters file:
  Warnings rememeber this code forces all steps to be on the mesh. This means that if you
  put the velocity to small the point won't even move it must be able to make the gap.
@@ -70,33 +77,7 @@ Parameters file:
 Code Explination:
  Better explination of the mesh can be found in refrences with the word file here I will just explain what code file does what
 
- mesh.f95: generates the mesh. ofc the mesh is an abstract and isn't real it just uses UVToIndex and IndexToUV to create all the nodes
- that mesh will evaluate the metric and connections on.
- Once mesh has finished it outputs the metric and the connections into there own files called metric.out and connections.out.
- In metric.out row i of the file is IndexToUV(i,u,v,...) is the uv point in the mesh and the 6 columns corespond to the 3 unique metric values and the 3 unique inverse metric
- 1st | g_(11) g_(12) g_(22) g^(11) g^(12) g^(22)
- .
- .
- .
- Tst | g_(11) g_(12) g_(22) g^(11) g^(12) g^(22)
- The way the connections file is organized in the same way where the rows corespond to the u,v point by Index to U,V and we store all six unique connections as such.
- 1st | 111 112 122 211 212 222 
- .
- .
- .
- Tth | 111 112 122 211 212 222
  
- T here is just used to represent the total number of points in the mesh which is calculated quite early on the mesh.
- If you open up mesh you will be able to see what I meah its ut*vt from this
- This code uses finite diffrence to calculate the partial derivatives
- 
- xyz.f95: These are our functions where we take our flat 2d uv surface and we put all points through and write that output to a specified file. When the mesh code above calls it
- it gives it 'uv.out', T, 'xyzuv.out' xyz.f95 then takes uv.out reads every row u,v and then puts it through whatever function switch told it to then writes that output to xyzuv.out
- where xyzuv.out is organized by x(u,v),y(u,v),z(u,v) mesh.f95 reads that file after the call then puts all data into an array of size (T,3) to do finite diffrence derivatives.
- To see more explination go to the actual code it has explination of all the variables
- 
- GeodesicIntegrator.f95: This code is what actually calculates the geodesic on the mesh because of the way mesh outputs the connections as well as the metric file we run this code seperatly which
- lets us quickly see results. Basically we don't need to recreate the mesh everytime we want to run the geodesic calculation we can just run the geodesic calculation.
  This code is completely intrinsic and the only refrence to xyz.f95 is to make uvpath.out -> xyzuvpath.out which is how we can see the curvature. However you can graph uv.path by itself and see the curve
  in 2d. The way it integrates the geodesic equation is as follows:
  Reads initial conditions for initial u and v
