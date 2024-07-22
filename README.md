@@ -5,8 +5,8 @@
  type in terminal 
 '''bash
  ./manifold.sh compiles
- ./runmesh executes
 '''
+ ./runmesh executes
  This generates the mesh that is based on your input parameters but it doesn't
  solve the geodesic equation.
  To run the geodesic equation you will need to compile ./Integrator.sh
