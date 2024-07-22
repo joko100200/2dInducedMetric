@@ -25,18 +25,19 @@ Which compiles the mesh creation part of the code. Which will output an executab
  For a more indepth look into the variables specified by parameter.inp read the comments right
  below the variable declerations in either mesh.f95 or GeodesicIntegrator.f95.
 
-## visualising
+## Visualising
  After executing runmesh you can you will have multiple output files.
  uv.out, xyzuv.out, connections.out, metric.out
  The quick explination of these files are: <br/> <br/>
    1. uv.out: Which is the 2d flat mesh with each row being a point where the two columns are (u,v) <br/>
    2. xyzuv.out: Which is the uv.out mesh once it has been through the parameterization defined in xyz.f95 his file is organized with each row being a single point and each colunm (x,y,z)  <br/>
+ Now the two files below store components of the objects only at each point. The "tangent" (points) where these objects are valued at in the files is implicitely stored in the row of the data. More information about this [below](https://github.com/joko100200/2dInducedMetric/edit/main/README.md#how-the-mesh-works)  <br/>
    3. connections.out: This file stores the numerical values of connection which there are ofcourse in 2d are 6 unique components. Each row is a single point in space and the colunms are (111,112/121,122,211,212/221,222) <br/>
    4. metric.out This file sotres the numerical values of the metric and inverse metric at every point on the mesh where the colunms are (11,12/21,22,inv11,inv12/21,inv22)<br/><br/>
-   
+
  
  
- 
+ # How the Mesh works
  
  Then to see the graph of both the 2d->3dmesh and the geodesic solution you will need to run gnuplot
  and the type in:
