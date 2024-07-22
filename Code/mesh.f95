@@ -186,8 +186,7 @@ if(error .ne. 0) stop
 
 !third loop to write mesh(i,7-12) for i=[1,t]
 do i = 1, t, 1
-write(12,*) mesh(i,7),mesh(i,8),mesh(i,9),mesh(i,10),&
-        mesh(i,11),mesh(i,12)
+write(12,*) mesh(i,7:12)
 enddo
 close(12)
 
@@ -196,8 +195,7 @@ open(37,file='metric.out',status='replace',&
 if(error .ne. 0) stop
 
 do i =1,t,1
-write(37,*)mesh(i,1),mesh(i,2),mesh(i,3),mesh(i,4),&
-        mesh(i,5),mesh(i,6)
+write(37,*)mesh(i,1:6)
 enddo
 close(37)
 
