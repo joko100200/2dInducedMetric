@@ -3,10 +3,13 @@
 ## How to run 
  Have gfortran installed
  type in terminal 
-'''bash
- ./manifold.sh compiles
+```bash
+ ./manifold.sh
+```
+Which compiles the mesh creation part of the code. Which will output an executable runmesh.
+```bash
  ./runmesh executes
-'''
+```
  This generates the mesh that is based on your input parameters but it doesn't
  solve the geodesic equation.
  To run the geodesic equation you will need to compile ./Integrator.sh
