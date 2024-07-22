@@ -226,7 +226,7 @@ allocate(metric(t,6))
 open(98,file=infile,status='old',action='read')
 open(100,file='metric.out',status='old',action='read')
 do i = 1, t, 1
-read(100,*) metric(i,1), metric(i,2), metric(i,3), metric(i,4), metric(i,5), metric(i,6) 
+read(100,*) metric(i,1:6) 
 enddo
 close(100)
 
