@@ -3,9 +3,9 @@
 ## How to run 
  Have gfortran installed
  type in terminal 
-'''bash
+```bash
  ./manifold.sh compiles
-'''
+```
  ./runmesh executes
  This generates the mesh that is based on your input parameters but it doesn't
  solve the geodesic equation.
