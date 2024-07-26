@@ -24,7 +24,6 @@ Which compiles the mesh creation part of the code. Which will output an executab
  This will solve the geodesic equation given the parameters you put in the paramater.inp file.
  For a more indepth look into the variables specified by parameter.inp read the comments right
  below the variable declerations in either mesh.f95 or GeodesicIntegrator.f95.
-
 ## Output Files
  After executing runmesh you can you will have multiple output files.
  uv.out, xyzuv.out, connections.out, metric.out
@@ -56,25 +55,24 @@ In metric.out row i of the file is IndexToUV(i,u,v,...) is the uv point in the m
  If you open up mesh.f95 you will be able to see what I meah its ut*vt which corespond to u total (total points along u) and v total (total points along v).
  ## Embbeding Functions
  xyz.f95 is the file where all the functions are stored in a single switch case. These are our functions where we take our flat 2d uv surface and we put all points through and write that output to a specified file. When the mesh code above calls it.<br/>
- 
- it gives it 'uv.out', T, 'xyzuv.out' xyz.f95 then takes uv.out reads every row u,v and then puts it through whatever function switch told it to then writes that output to xyzuv.out
- where xyzuv.out is organized by x(u,v),y(u,v),z(u,v) mesh.f95 reads that file after the call then puts all data into an array of size (T,3) to do finite diffrence derivatives.
- To see more explination go to the actual code it has explination of all the variables
+ it gives it 'uv.out', T, 'xyzuv.out' xyz.f95 then takes uv.out reads every row u,v and then puts it through whatever function switch told it to then writes that output to xyzuv.out<br/>
+ where xyzuv.out is organized by x(u,v),y(u,v),z(u,v) mesh.f95 reads that file after the call then puts all data into an array of size (T,3) to do finite diffrence derivatives.<br/>
+ To see more explination go to the actual code it has explination of all the variables<br/>
  
  GeodesicIntegrator.f95: This code is what actually calculates the geodesic on the mesh because of the way mesh outputs the connections as well as the metric file we run this code seperatly which
- lets us quickly see results. Basically we don't need to recreate the mesh everytime we want to run the geodesic calculation we can just run the geodesic calculation.
+ lets us quickly see results. Basically we don't need to recreate the mesh everytime we want to run the geodesic calculation we can just run the geodesic calculation.<br/>
  
-Parameters file:
- Warnings rememeber this code forces all steps to be on the mesh. This means that if you
- put the velocity to small the point won't even move it must be able to make the gap.
- These are just warnings if you want to find out what each variable is please look at the code.
- There it will tell you what each one does unless they are a dummy variable in which case I might have been lazy and didn't put they were a dummy variable
- You can also refrence the refrences folder that includes a very indepth look into how the mesh works
- Even tho the mesh can be transformed into compact surfaces doesn't mean it works. Those require special boundry conditions
- which changes based on the transformation in xyz.f95 which I don't know how to do and I'm a bit to unintrested.
- So all surfaces you want to add must not wrap on itself i.e. They must not be compact
+## Parameters file
+ Warnings rememeber this code forces all steps to be on the mesh. This means that if you<br/>
+ put the velocity to small the point won't even move it must be able to make the gap.<br/>
+ These are just warnings if you want to find out what each variable is please look at the code.<br/>
+ There it will tell you what each one does unless they are a dummy variable in which case I might have been lazy and didn't put they were a dummy variable<br/>
+ You can also refrence the refrences folder that includes a very indepth look into how the mesh works<br/>
+ Even tho the mesh can be transformed into compact surfaces doesn't mean it works. Those require special boundry conditions<br/>
+ which changes based on the transformation in xyz.f95 which I don't know how to do and I'm a bit to unintrested.<br/>
+ So all surfaces you want to add must not wrap on itself i.e. They must not be compact<br/>
 
-Code Explination:
+## Code Explination
  Better explination of the mesh can be found in refrences with the word file here I will just explain what code file does what
 
  
